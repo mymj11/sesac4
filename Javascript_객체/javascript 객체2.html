@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>타이틀</title>
+
+        <script>
+
+        </script>
+
+    </head>
+    <body>
+        <img src="../img/녹차라떼.jpg" title="1" width="100" height="100">
+        <img src="../img/아메리카노.jpg" title="2" width="100" height="100">
+        <img src="../img/자몽에이드.jpg" title="3" width="100" height="100">
+
+        <div id="div1" class="div1">
+            <input type="text" id="input1" value="값">
+            <button type="button" onclick="submit();">버튼</button>
+            <p class="css1">P태그 1</p>
+            <p class="css2">P태그 2</p>
+            <div>
+                <p class="css1">p태그3</p>
+            </div>
+        </div>
+
+        <script>
+            console.log(document.getElementsByTagName("img"));
+            console.log(document.getElementsById("input1"));
+            console.log(document.querySelectorAll("#div1 > .css1"));
+        function sumit(){
+            
+            var input = document.getElementById("input1");
+            console.log(input.value);
+        }
+        </script>
+    </body>
+</html>
