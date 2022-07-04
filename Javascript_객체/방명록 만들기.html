@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>방명록 만들기</title>
+        <h1 style="font-size:12px;">방명록입니다.</h1></br>
+        <script>
+            function addRow(){
+                var number=document.getElementById("number").value;
+                var name=document.getElementById("name").value;
+                var memo=document.getElementById("memo").value;
+
+                var table=document.getElementsByTagName("table")[0];
+
+                var newRow=table.insertRow(0);
+
+                var cel1=newRow.insertCell(0);
+                var cel2=newRow.insertCell(1);
+                var cel3=newRow.insertCell(2);
+
+                cell.innerHTML=number;
+                cel2.innerHTML=name;
+                cel3.innerHTML=memo;
+
+                var tr_1=document.createElement("tr");
+                var td_1=document.createElement("td");
+                var td_2=document.createElement("td");
+                var td_3=document.createElement("td");
+                var td_4=document.createElement("td");
+                
+                
+                }    
+        </script>
+    </head>
+    <body>
+        작성자 <input type="text" id="name"></br>
+        내용 <input type="text" id="memo"></br></br>
+        <button type="button" onclick="addRow();">작성</button>
+        <table border="1" cellspacing="0">
+            <tr>
+                <td>번호</td>
+                <td>작성자</td>
+                <td>내용</td>
+                <td>작성일</td>
+            </tr>
+        </table>
+    </head>
+    </body>
+</html>
