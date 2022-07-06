@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="../jquery-ui-1.13.1.custom/jquery-ui.js"></script>
+        <link rel="stylesheet" href="../jquery-ui-1.13.1.custom/jquery-ui.css">
+        <script>
+            function changeAttribute(){
+                $("#img").attr("src", "../img/사과.jpg");
+            }
+            function changeAttribute2(){
+                $("#img").attr("src", "../img/바나나.jpg");
+            }
+            function changeAttribute3(){
+                $("#img").attr("src", "../img/포도.jpg");
+            }
+            function changeAttribute4(){
+                $("#img").attr("src", "../img/복숭아.jpg");
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <img id="img" src="">
+        </div>
+        <button type="button" onclick="changeAttribute()">사과</button>
+        <button type="button" onclick="changeAttribute2()">바나나</button>
+        <button type="button" onclick="changeAttribute3()">포도</button>
+        <button type="button" onclick="changeAttribute4()">복숭아</button>
+    </body>
+</html>
