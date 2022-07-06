@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script>
+            function append(){
+                var li=document.createElement("li");
+                li.innerText="append";
+                // document.querySelector("ul").appendChild(li);
+                $("ul").append(li);
+            }
+            function prepend(){
+                var li=document.createElement("li");
+                li.innerText="prepend";
+                $("ul").prepend(li);
+            }
+            function before(){
+                var li=document.createElement("li");
+                li.innerText="before";
+                $("#li2").before(li);
+            }
+            function after(){
+                var li=document.createElement("li");
+                li.innerText="after";
+                $("#li2").after(li);
+            }
+            function search(){
+                console.log($("#li2").parent());
+                console.log($("#li2").next());
+                console.log($("ul").children());
+            }
+            function removeElement(){
+                $("#li2").remove();
+            }
+            function emptyElement(){
+                $("ul").empty();
+            }
+            function addClass(){
+                $("div").addClass("css1");
+            }
+            function removeClass(){
+                $("div").removeClass("css1");
+            }
+            function hasClass(){
+                if($("div").hasClass("css1")){
+                    alert("css1!!!!");
+                } else if(!$("div").hasClass("css1")){
+                    alert("css1 no!!!!");
+                }
+            }
+        </script>
+        <style>
+            .css1{
+                width: 100px;
+                height: 100px;
+                background-color: brown;
+            }
+        </style>
+    </head>
+    <body>
+        <div></div>
+        <button type="button" onclick="addClass()">addClass()</button>
+        <button type="button" onclick="removeClass()">removeClass()</button>
+        <button type="button" onclick="hasClass()">hasClass()</button>
+        <ul>
+            <li>1</li>
+            <li id="li2">2</li>
+            <li id="li3">3</li>
+        </ul>
+        <button type="button" onclick="append()">append</button>
+        <button type="button" onclick="prepend()">prepend</button>
+        <button type="button" onclick="before()">before</button>
+        <button type="button" onclick="after()">prepend</button>
+        <button type="button" onclick="parent()">parent</button>
+        <button type="button" onclick="removeElement()">remove</button>
+        <button type="button" onclick="emptyElement()">empty</button>
+    </body>
+</html>
