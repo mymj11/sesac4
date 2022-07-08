@@ -2,9 +2,7 @@
     <head>
         <meta charset="UTF-8">
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.min.js" ></script>
-​
         <title> 내 스케줄 </title>
-​
         <style>
             td {
                 width: 100px;
@@ -24,7 +22,6 @@
             }
         </style>
     </head>
-​
     <body > 
         <div>
             날짜 : <input type="text" id="date" readonly> <br>
@@ -34,7 +31,6 @@
         <div style="font-size:2em; color:green; text-align:center;">
             2022년 7월        
         </div> 
-​
         <br>
         
         <table align="center" width=500 style="text-align:center;">
@@ -101,7 +97,6 @@
                 <td><p></p></td>
             </tr>
         </table>
-​
         <script>
             var target;
 
@@ -109,7 +104,7 @@
                 console.log(obj);
                 target=obj.currentTarget; //현재 선택한 태그 target 변수에 담기 지금, td가 console.log로 나온다.
                 console.log(target);
-                $("date").val($(obj.currentTarget).text());
+                $("#date").val($(obj.currentTarget).text());
                 // alert($(obj.currentTarget).text());
             });
 
@@ -124,8 +119,8 @@
                 console.log(ps[i]);
                 if($(ps[i]).text()==$("#date").val()){
                     $(ps[i]).after(
-                        "<h1>adf</h1>"
-                        );
+                        "<p>"+content+"</p>"
+                    );
                     }
                 }
             }
