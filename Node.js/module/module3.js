@@ -1,4 +1,4 @@
-const{Car}=require('./class2.js');
+const{Car}=require('../class/class2.js');
 
 console.log(Car);
 
