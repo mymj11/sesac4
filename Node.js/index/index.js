@@ -1,7 +1,15 @@
-const returnString = require("./fucn.js");
-// 한 개를 가져올 경우
+const express = require("express");
+const app = express();
+const port = 8000;
 
-const {a, b} = require("./variable.js");
-// 여러 개를 가져올 경우
+app.set( 'view engine', 'ejs' );
+app.use( '/abc/aa', express.static( 'public' ) );
 
-console.log(returnString());
+app.get('/', (req, res) => {
+    var list = ['apple', 'banana']; // DB에서 정보를 가져왔다.
+    res.render("test", {list: list});
+});
+
+app.listen(port, ()=>{
+    console.log( 'Server port : ', port );
+});
