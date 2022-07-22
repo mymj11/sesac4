@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>EJS문법</title>
+    </head>
+    <body>
+        <!--
+            for (var i=0; i<5; i++){
+                if (i==3){
+                    //h3태그
+                }else{
+                    //h1태그
+                }
+            }
+        -->
+        <% for (var i=0; i<5; i++) { %>
+            <% if (i==3) { %>
+                <h3>hi</h3>    
+            <% } else { %>
+                <h1>hi</h1>
+            <% } %>
+        <% } %>
+
+        <% var a='hello'; %>
+        <p><%=a%></p>
+
+        <%- include('test4.ejs') %>
+    </body>
+</html>
