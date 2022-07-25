@@ -26,3 +26,6 @@ async function exec(){
 exec();
 
 // new2 파일이 생기고 '안녕'이라고 쓰여져 있을 것이다.
+
+const fs = require("fs").promises;
+fs.writeFile("./write.txt", "안녕");

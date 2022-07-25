@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>Index.ejs</title>
+    </head>
+
+    <body>
+        <form action="receive" method="POST">
+            <fieldset>
+                <legend>이름/성별</legend>
+            <label>
+                이름 : 
+                <input type="text" name="name" placeholder="이름" required> <br>
+            </label>
+            <!-- <input type="text" name="name" placeholder="이름" required> <br> -->
+            <input type="radio" name="gender" id="gender_1" value="남">
+            <label for="gender_1">남</label>
+            <!-- <input type="radio" name="gender" value="남">남 -->
+            <input type="radio" name="gender" value="여">여 
+            </fieldset>
+            <fieldset>
+                <legend>스포츠/연도</legend>
+            <input type="checkbox" name="sport" value="축구">축구
+            <input type="checkbox" name="sport" value="야구">야구
+            <input type="checkbox" name="sport" value="농구">농구 <br>
+
+            <!-- value를 설정해 줘야 한다. -->
+
+            <!-- required를 필수입력값이다. 입력하지 않으면 다음으로 넘어가지 않는다. 
+            required는 input만의 속성은 아니다.
+            radio는 여러 개 중에서 선택하는 요소이다. 단, 한 번 선택하면 취소할 수 없다.
+            checkbox는 여러 개 선택이 가능하다. 이는 취소도 가능하다. 
+            checkbox는 list로 올 수 있고 같은 list로 묶기 위해서는 이름이 동일해야 한다.-->
+
+            <!-- <input type="date">
+            <input type="color">
+            <input type="number">
+            <input type="time">
+            <input type="password">
+            <input type="reset" value="Reset"> <br> -->
+
+            <select name="year">
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+            </select>
+            </fieldset>
+            <!-- select는 value를 설정해줘야 한다. -->
+            <button>전송</button>
+        </form>
+    </body>
+</html>
+
+<!-- 값을 입력하고 전송 버튼을 누르면 localhost:8080/receive라고 뜬다. -->
+<!-- receive-post이다. -->
