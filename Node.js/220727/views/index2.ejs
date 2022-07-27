@@ -1,0 +1,73 @@
+<html>
+    <head>
+
+        <title>폼 전송을 axios로 보내기</title>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <script>
+            function sendForm(){
+                var form = document.getElementById("form_info");
+                console.log(form);
+
+                var result = form.checkValidity();
+                if(!result){
+                    form.reportValidity();
+
+                    return false;
+                }
+                console.log(result);
+                axios({
+                    method: "get",
+                    url: "http://localhost:8080/receive2",
+                    params:{
+                        name: form.name.value,
+                        gender: form.gender.value,
+                        year: form.year.value,
+                        month: form.month.value,
+                        day: form.day.value
+                }
+                }).then((a) => {return a.data;})
+                .then((d) => {
+                    alert(d.message);
+                });
+            }
+        </script>
+    </head>
+
+    <body>
+        <form action="receive2" method="Get" id="form_info">
+            <label>
+                이름 
+                <input type="text" name="name" placeholder="이름" required> 
+            </label><br>
+            <!-- <input type="text" name="name" placeholder="이름" required> <br> -->
+            <!-- <input type="radio" name="gender" value="남">남 -->
+            <br><legend>성별
+            <input type="radio" name="gender" id="gender_1" value="남" required>
+            <label for="gender_1">남</label>
+            <input type="radio" name="gender" id="gender_1" value="여" required>
+            <label for="gender_1">여</label> 
+            </legend><br>
+            <legend>생년월일
+            <select name="year">
+                <% for (var i=1950; i<=2022; i++){%>
+                    <option value="<%=i%>"><%=i%></option>
+                <% } %>
+            </select>년
+            <select name="month">
+                <% for (var i=1; i<=12; i++){%>
+                    <option value="<%=i%>"><%=i%></option>
+                <% } %>
+            </select>월
+            <select name="day">
+                <% for (var i=1; i<=31; i++){%>
+                    <option value="<%=i%>"><%=i%></option>
+                <% } %>
+            </select>일
+            </legend>
+            <br>
+            <button type="button" onclick="sendForm()">회원가입</button>
+        </form>
+    </body>
+</html>
