@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>파일 업로드</title>
+    </head>
+
+    <body>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="userfile">
+            <input type="text" name="name">
+            <button>업로드</button>
+        </form>
+        <br>
+        <form action="/upload/array" method="POST" enctype="multipart/form-data">
+            <input type="file" name="userfile" multiple>
+            <input type="text" name="name">
+            <button>업로드</button>
+        </form>
+        <!-- 한 번에 여러 파일을 업로드 할 수 있다. -->
+        <br>
+        <form action="/upload/fields" method="POST" enctype="multipart/form-data">
+            <input type="file" name="userfile1">
+            <input type="file" name="userfile2">
+            <input type="file" name="userfile3">
+            <button>업로드</button>
+        </form>
+        <!-- 한 번에 여러 파일을 업로드 할 수 있다. 
+            단, fields는 하나하나 다 입력을 해줘야 하기 때문에 잘 사용하지 않은 방식이다.-->
+    </body>
+</html>
+
+<!-- enctype="multipart/form-data" 
+    파일 업로드 할 때 반드시 form안에 써줘야 한다.
+    여러 개 파일 선택하려먼 input 속성에 multiple이라고 추가하고 files라고 복수형 써주기 -->
