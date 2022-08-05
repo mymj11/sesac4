@@ -24,3 +24,4 @@ exports.insert = (name, comment, cb) => {
 }
 
 // cb()는 callback 함수
+// cb가 function(result)

@@ -100,6 +100,24 @@ ALTER TABLE member modify column id varchar(10);
 
 DESC member;
 
+USE sesac;
+CREATE TABLE visitor(
+	id int not null primary key auto_increment,
+    name varchar(10) not null,
+    comment mediumtext  null
+);
+
+DESC visitor;
+
+INSERT INTO visitor (id, name, comment ) VALUES ('1', '홍길동', '내가 왔다');
+SELECT * FROM visitor;
+
+
+
+
+
+
+
 
     
 
