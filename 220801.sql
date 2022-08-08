@@ -83,7 +83,6 @@ SELECT * FROM user;
 DELETE FROM user WHERE id='jungkrat';
 SELECT * FROM user;
 
-
 CREATE TABLE member(
 	id varchar(20) not null primary key,
     name varchar(5) not null,
@@ -100,6 +99,8 @@ ALTER TABLE member modify column id varchar(10);
 
 DESC member;
 
+DROP TABLE member;
+
 USE sesac;
 CREATE TABLE visitor(
 	id int not null primary key auto_increment,
@@ -111,6 +112,21 @@ DESC visitor;
 
 INSERT INTO visitor (id, name, comment ) VALUES ('1', '홍길동', '내가 왔다');
 SELECT * FROM visitor;
+
+USE sesac;
+CREATE TABLE member(
+	id varchar(10) not null primary key,
+    pw varchar(10) not null,
+    name varchar(5) not null,
+    email varchar(50) null
+);
+
+INSERT INTO member (id, pw, name, email) VALUES ('sesac', '1234', '김민지', 'sesac4@gmail.com');
+SELECT * FROM member;
+
+
+
+	
 
 
 

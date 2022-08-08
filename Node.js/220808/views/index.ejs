@@ -1,0 +1,184 @@
+<html>
+    <head>
+        <title> 회원가입,로그인,회원정보 수정 </title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+        <script>
+            function registerComment(){
+                var form = document.getElementById("form_comment");
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:8000/member/register',
+                    data: {
+                        id: form.id.value,
+                        pw: form.pw.value,
+                        name: form.name.value,
+                        email: form.email.value
+                    }
+                })
+                .then((rep)=>{return rep.data;})
+                .then((data)=>{
+
+                    let html =
+                    "<tr id='tr_"+data.id+"'><td>"+data.id+"</td><td>"+data.pw+"</td><td>" + form.name.value + "</td><td>"+form.email.value + "</td><td>"
+                    "<td><button type='button' onclick='editComment("+data.id+data.pw+form.name.value+form.email.value+");'>회원가입</button></td><td><button type='button' onclick='editComment("+data.id+data.pw+");'>로그인</button></td><td><button type='button' onclick='editComment("+data.id+");'>회원정보 수정</button></td><td><button type='button' onclick='deleteComment("+data.id+");'>회원 탈퇴</button></td></tr>";
+
+                    $("table").append(html);
+                });
+            }
+
+            function loginComment(){
+                var form = document.getElementById("form_comment");
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:8000/member/login',
+                    data: {
+                        id: form.id.value,
+                        pw: form.pw.value
+                    }
+                })
+                .then((rep)=>{return rep.data;})
+                .then((data)=>{
+
+                    let html =
+                    "<tr id='tr_"+data.id+"'><td>"+data.id+"</td><td>"+data.pw+"</td><td>" + form.name.value + "</td><td>"+form.email.value + "</td><td>"
+                    "<td><button type='button' onclick='editComment("+data.id+data.pw+form.name.value+form.email.value+");'>회원가입</button></td><td><button type='button' onclick='editComment("+data.id+data.pw+");'>로그인</button></td><td><button type='button' onclick='editComment("+data.id+");'>회원정보 수정</button></td><td><button type='button' onclick='deleteComment("+data.id+");'>회원 탈퇴</button></td></tr>";
+
+                    $("table").send(html);
+                });
+            }
+
+            function editComment(id){
+                axios({
+                    method: 'get',
+                    url: 'http://localhost:8000/member/get?id=' + id
+                })
+                .then((rep)=>{return rep.data})
+                .then((data)=>{
+                    
+                    console.log(data.result);
+
+                    var form = document.getElementById("form_comment");
+                    form.id.value = data.result.id;
+                    form.pw.value = data.result.pw;
+                    form.name.value = data.result.name;
+                    form.email.value = data.result.email;
+
+                    var html = 
+                    "<button type = 'button' onclick='editDo("+id+");'>수정</button>" +
+                    "<button type = 'button' onclick='editCancel();'>탈퇴</button>";
+
+                    document.getElementById("button-group").innerHTML = html;
+                });
+
+            }
+
+            function editCancel(){
+                var form = document.getElementById("form_comment");
+                form.reset();
+
+                var html = "<button type = 'button' onclick='registerComment();'>회원가입</button>";
+                var html2 = "<button type='button' onclick='registerComment();''>로그인</button>";
+                document.getElementById("button-group").innerHTML=html;
+                document.getElementById("button-group").innerHTML=html2;
+            }
+
+            function editDo(id){
+                var form = document.getElementById("form_comment");
+                axios({
+                    method: 'patch',
+                    url: 'http://localhost:8000/member/edit',
+                    data: {
+                        id: id,
+                        pw: pw,
+                        name: form.name.value,
+                        email: form.email.value,
+                    }
+                }).then((rep)=> {return rep.data;})
+                .then((data)=>{
+                    alert(data);
+
+                    var tr = document.getElementById("tr_"+id);
+                    var children = tr.children;
+
+                    $(children[1]).text(form.id.value);
+                    $(children[2]).text(form.pw.value);
+                    $(children[3]).text(form.name.value);
+                    $(children[4]).text(form.email.value);
+                    console.log(children);
+                })
+            }
+
+            function deleteComment(id){
+                axios({
+                    method: 'delete',
+                    url: "http://localhost:8000/member/delete",
+                    data: {id : id}
+                }).then((rep)=>{return rep.data;})
+                .then((data)=>{
+                    alert(data);
+                    var tr=document.getElementById("tr_"+id);
+                    $(tr).remove();
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <form id="form_comment">
+            <fieldset>
+                <legend>회원정보</legend>
+                <div>ID : <input name="id" type="text" placeholder="아이디를 입력하세요."></div>
+                <div>PW : <input name="pw" type="text" placeholder="비밀번호를 입력하세요."></div>
+                <div>이름 : <input name="name" type="text" placeholder="이름을 입력하세요."></div>
+                <div>e-mail : <input name="email" type="text" placeholder="이메일을 입력하세요."></div><br>
+                <div id="button-group">
+                    <button type="button" onclick="registerComment();">회원가입</button>
+                </div>
+            </fieldset>
+            </form>
+        </div>
+        <div>
+            <form id>
+            <fieldset>
+                <legend>로그인</legend>
+                <div>ID : <input name="id" type="text" placeholder="아이디를 입력하세요."></div>
+                <div>PW : <input name="pw" type="text" placeholder="비밀번호를 입력하세요."></div><br>
+                <div id="button-group">
+                    <button type="button" onclick="loginComment();">로그인</button>
+                </div>
+            </fieldset>
+            </form>
+        </div>
+        <br>
+        <table id="visitr_list" border="1" cellspacing="0" cellpadding="0">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>pw</th>
+                <th>name</th>
+                <th>e-mail</th>
+                <th>수정</th>
+                <th>탈퇴</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                for (let i=0; i<data.length; i++){
+            %>
+                <tr id="tr_<%=data[i].id%>">
+                    <td><%=data[i].id%></td>
+                    <td><%=data[i].pw%></td>
+                    <td><%=data[i].name%></td>
+                    <td><%=data[i].email%></td>   
+                    <td><button type="button" onclick="editComment('<%=data[i].id%>')">수정</button></td>
+                    <td><button type="button" onclick="deleteComment('<%=data[i].id%>')">탈퇴</button></td>
+                </tr>
+            <%
+                }
+            %>
+            </tbody>
+        </table>
+    </body>
+</html>
