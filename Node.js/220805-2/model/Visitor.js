@@ -23,5 +23,30 @@ exports.insert = (name, comment, cb) => {
     });
 }
 
+exports.get_visitor = (id, cb) => {
+    //id 컬럼의 값이 id인 데이터를 1개만 검색한다.
+    cnn.query(`select * from visitor where id = ${id} limit 1;`, (err, rows) => {
+        if(err) throw err;
+
+        cb(rows);
+    });
+
+}
+
+exports.update = (data, cb) => {
+    let sql = `UPDATE visitor SET name='${data.name}', comment='${data.comment}' WHERE id=${data.id}`;
+    cnn.query(sql, (err, rows)=>{
+        if(err) throw err;
+        cb(rows);
+    })
+}
+
 // cb()는 callback 함수
 // cb가 function(result)
+
+exports.delete = (id, cb) => {
+    cnn.query(`DELETE FROM visitor WHERE id=${id}`, (err, rows)=>{
+        if(err) throw err;
+        cb(rows);
+    })
+}
