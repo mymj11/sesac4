@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <script>
+            console.log(document.cookie);
+            document.cookie = "user=sesac; expires=Sat, 13 Aug 2022 13:00:00 GMT; path=/";
+            //만료기간을 위와 같은 형태로 명확하게 적어줘야 한다.
+            //클라이언트에서 문자열처럼 여러 개의 옵션을 적을 때에는 ;을 사용하자
+            console.log(document.cookie);
+
+            //key2 쿠키를 찾는 경우,
+            var cookieArr = document.cookie.split(";");
+            //for (var i=0; i<cookieArr.length; i++)
+            for (var i in cookieArr){
+                console.log(cookieArr[i]);
+            }
+        </script>
+    </head>
+</html>
