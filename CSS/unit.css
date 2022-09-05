@@ -1,0 +1,73 @@
+.box{
+    margin-bottom: 100px;
+}
+
+.px{
+    width: 500px;
+    height: 500px;
+    background-color: palegoldenrod;
+}
+
+.pct-parent{
+    width: 500px;
+    height: 500px;
+    background-color: plum;
+}
+
+.pct-child{
+    width: 50%;
+    /* 부모 박스의 50% 즉, 250px */
+    height: 50%;
+    background-color: palegreen;
+}
+
+.em{
+    font-size: 2em;
+}
+
+.case1{
+    font-size: 20px;
+}
+
+.case2{
+    font-size: 10px;
+}
+
+.em-3{
+    font-size: 3em;
+}
+
+.rem{
+    font-size: 2rem;
+}
+
+.vw{
+    height: 20vw;
+    width: 20vw;
+    background-color: coral;
+}
+
+.vh{
+    height: 20vh;
+    width: 20vh;
+    background-color: skyblue;
+}
+
+.test{
+    /* font-size: 20vw; */
+    font-size: 30px;
+}
+
+@media screen and (min-width: 768px){
+    .px{
+        width: 900px;
+        height: 900px;
+        /* background-color: palegoldenrod; */
+        background-color: pink;
+    }
+
+    .test{
+        font-size: 10vw;
+    }
+
+}
