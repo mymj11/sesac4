@@ -1,0 +1,206 @@
+* {
+    box-sizing: border-box;
+}
+
+ul, ol,
+fieldset, legend {
+    margin: 0;
+    padding: 0;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.inner{
+    width: 100%;
+    height: 100%;
+    /* inner태그는 다른 태그 안에 들어가 있기 때문에 태그 안에 차지하게 하려고? */
+
+    /* 가운데 정렬 */
+    /* 상, 하 */
+    margin: 0 auto;
+    padding: 0 2rem;
+    /* inner태그의 여유 공간을 줬다. */
+
+    /* temp */
+    /* border: 1px solid blue; */
+}
+
+
+/* header */
+header{
+    background: pink;
+    height: 100px;
+}
+
+.header-container{
+    width: 100%;
+    height: 100%;
+
+    /* 나란히 정렬 */
+    display: flex;
+    /* 메인축 방향 정렬 : 로고와 메뉴바 사이 벌려서 양쪽 끝으로 */
+    justify-content: space-between;
+    /* 수직축 방향 정렬 : 로고와 메뉴바 위아래 폭 중간 정렬 */
+    align-items: center;
+}
+
+.icon_menu{
+    display: block;
+    /* 배치 방향 설정 : 세로정렬 */
+    flex-direction: column;
+}
+
+.list_menu{
+    display: none;
+}
+
+
+/* slide_menu */
+.slide_menu{
+    background-color: gold;
+
+    /* position을 absolute로 줬기 때문에 수정이 필요 */
+    display: block;
+    width: 100%;
+
+    /* 슬라이드 메뉴가 콘텐츠 위로 올라오게 */
+    position: absolute;
+    z-index: 999;
+}
+
+/* 클릭하면 나타나고 사라지게 */
+.slide_menu.d-none{
+    display: none;
+}
+
+.slide_menu_container{
+    /* flex의 기본 속성은 가로이다. */
+    display: flex;
+    /* 그래서 세로로 바꿔주기 위해서는 */
+    flex-direction: column;
+}
+
+.slide_menu_container > a {
+    margin: 12px 0;
+}
+
+/* problem2 */
+.card_list{
+    /* 카드 나란히 정렬 */
+    display: flex;
+    /* 자동 줄바꿈, 개행처리*/
+    flex-wrap: wrap;
+    width: 100%;
+    /* border색을 임시적으로 지정해 주면 코드짜기가 편하다. */
+    /* border: 2px solid red; */
+}
+
+.card_wrapper{
+    /* card_list의 자식요소니까 100%의 50%*/
+    width: 50%;
+    /* border: 2px solid green; */
+}
+
+.card_item{
+    /* wrapper보다 작은 요소니까 여기에 margin*/
+    margin: 8px;
+    /* border: 2px solid blue; */
+}
+
+/* card_item의 너비에 맞춰서 이미지의 너비도 맞춰진다. */
+.card_item > img{
+    width: 100%;
+}
+
+.card_item.tit{
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* 992px 미만일 때는 설명글이 보이지 않는다. */
+.card_item.desc{
+    display: none;
+}
+
+
+@media screen and (min-width: 1200px){
+    .inner{
+        max-width: 1200px;
+    }
+}
+
+/* 992px 이상일 때 */
+@media screen and (min-width: 992px){
+    body{
+        background: lavender;
+    }
+
+    .list_menu{
+        display: none;
+        /* 위치값, 자기 영역까지도 사라짐 */
+    }
+    /*아이콘은 가려져야 하니까?*/
+
+    .icon_menu{
+        display: block;
+    }
+
+
+    /* problem2 */
+    .card_wrapper{
+        width: 20%;
+    }
+
+    /* 992px 이상일 때는 설명글이 보인다. */
+    .card_item.desc{
+        display: block;
+    }
+}
+
+
+
+
+
+/* problem2 */
+
+/* .card_list{
+    display: flex;
+    자동 줄바꿈
+    flex-wrap: wrap;
+}
+
+.card_item{
+    margin : 8px 8px 8px 8px;
+}
+
+.tit{
+    font-weight: bold;
+}
+
+
+992px 이상일 때
+@media screen and (min-width: 992px) {
+    .card_item{
+        flex-basis: 20%;
+    }
+}
+
+992px 미만일 때
+@media screen and (max-width: 991px){
+    .desc{
+        display: none;
+    }
+
+    .card_item{
+        flex-basis: 40%;
+    }
+    40%를 주면 100%에 row에는 이미지 2개까지만 남고 나머지는 wrap기능으로 다음 줄로 넘어간다.
+    
+} */
