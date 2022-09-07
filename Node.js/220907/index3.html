@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+        <style>
+            .chat-list{
+                background-color: skyblue; 
+                width: 50%; 
+                height: 50%; 
+                padding: 10px;
+            }
+            .chat-list div div {display: inline-block; padding: 3px;}
+            .my-chat{text-align: right;}
+            .my-chat div{background-color: yellow; display: inline-block;}
+            .other-chat div{background-color: white;}
+        </style>
+    </head>
+
+    <body>
+
+        <div id = "chat-list" class="chat-list"></div>
+        <input type = "text" id = "message">
+        <button type="button" onclick="send();">전송</button>
+        <script>
+            var id = "";
+            //내가 사용할 수 있도록 저장
+            var socket = io.connect();
+            socket.on("info", function(data){id = data;});
+
+            function send(){
+                //메시지를 보내자. 클라이언트가 서버에게 내가 누군지 이미 한 번 알기 때문에 메시지 보낼 때마다 아이디는 안 보내도 된다?
+                let msg = document.getElementById("message").value;
+                //socket.emt("send", {id, msg});
+                socket.emit("send", {id: id, msg: msg});
+                // socket.emit("send", msg); //내가 입력한 메시지를 send라는 이벤트명으로 보내기
+                document.getElementById("message").value="";
+            }
+            socket.on("newMessage", function(data){
+                //data = {id:~~~, msg:~~~}
+                let chat_list = document.getElementById("chat-list");
+                let div = document.createElement("div")
+                //내가 새로운 메시지를 받았으면 위의 chat-list에 넣어주기
+                //내 메시지를 담을 div 만들기 그래야 덮어지지 않음 <div></div>
+                let div_chat = document.createElement("div");
+
+                div_chat.textContent = data.msg; //<div>{msg}</div>
+
+                if(data.id==id){div.classList.add("my-chat");}
+                //아이디가 동일하면 my-chat, 같지 않으면 other-chat
+                // if(msg == document.getElementById("message").value){div.classList.add("my-chat");}
+                //내가 보냈는지 아닌지 식별하기 위해서 data.id==id
+                else{div.classList.add("other-chat");}
+                //<div class="my-chat"></div>
+
+                //div => <div class="my-chat"></div>
+                //div_chat => <div>{msg}</div>
+                
+                div.appendChild(div_chat);
+                //<div class="my-chat">
+                        //<div>{msg}</div>
+                //</div>
+                chat_list.appendChild(div);
+            });
+            //내가 보낸 메시지는 오른쪽에 받는 메시지는 왼쪽으로 나온다.
+
+            socket.on("notice", function(data){
+                let chat_list = document.getElementById("chat-list");
+                let div = document.createElement("div"); //<div></div>
+                div.textContent = data + "님이 입장하셨습니다.";
+                // div.textContent = data;
+
+                chat_list.appendChild(div);
+            });
+        </script>
+        
+    </body>
+</html>
+

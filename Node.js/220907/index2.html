@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+    </head>
+
+    <body>
+        <p>Hello World!</p>
+        <!-- <button type = "button" onclick="send('hello');">hello</button> -->
+        <!-- <button type = "button" onclick="send('study');">hello</button> -->
+        <button type = "button" onclick="hello();">hello</button>
+        <button type = "button" onclick="study();">study</button>
+        <button type = "button" onclick="bye();">bye</button>
+        <h5 id="content"></h5>
+        <script>
+            var socket = io.connect();
+
+            // function send(e){
+            //     socket.emit(e,e);
+                    //socket.send("send", e);
+            // }
+
+                    //e : hello
+                    //socket.emit('hello', 'hello')
+                    //socket.emit('study', 'study')\
+                    //socket.emit(e,e);
+
+            function hello(){
+                socket.emit("hello", "hello");
+            }
+            function study(){
+                socket.emit("study", "study")
+            }
+            function study(){
+                socket.emit("study", "study")
+            }
+
+            socket.on("response", function(data){
+                var tag = document.getElementById("content");
+                tag.textContent = data;
+            });
+        </script>
+    </body>
+</html>
+
