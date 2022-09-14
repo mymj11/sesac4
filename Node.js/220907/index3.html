@@ -18,19 +18,27 @@
     <body>
 
         <div id = "chat-list" class="chat-list"></div>
+        <select id = "nick-list">
+            <option value="전체">전체</option>
+        </select>
         <input type = "text" id = "message">
         <button type="button" onclick="send();">전송</button>
         <script>
-            var id = "";
+            var nickname = prompt("닉네임을 입력해주세요.");
+            // var id = "";
             //내가 사용할 수 있도록 저장
             var socket = io.connect();
-            socket.on("info", function(data){id = data;});
+            socket.emit("info2", {nickname: nickname});
+            // socket.on("info", function(data){id = data;});
 
             function send(){
                 //메시지를 보내자. 클라이언트가 서버에게 내가 누군지 이미 한 번 알기 때문에 메시지 보낼 때마다 아이디는 안 보내도 된다?
                 let msg = document.getElementById("message").value;
+                let nick = document.getElementById("nick-list").value;
                 //socket.emt("send", {id, msg});
-                socket.emit("send", {id: id, msg: msg});
+                socket.emit("send", {msg: msg, to: nick});
+                //to: nick은 내가 선택한 닉네임
+                // socket.emit("send", {id: id, msg: msg});
                 // socket.emit("send", msg); //내가 입력한 메시지를 send라는 이벤트명으로 보내기
                 document.getElementById("message").value="";
             }
@@ -41,14 +49,23 @@
                 //내가 새로운 메시지를 받았으면 위의 chat-list에 넣어주기
                 //내 메시지를 담을 div 만들기 그래야 덮어지지 않음 <div></div>
                 let div_chat = document.createElement("div");
+                let span = document.createElement("span");
+                //<div><div>
+
 
                 div_chat.textContent = data.msg; //<div>{msg}</div>
 
-                if(data.id==id){div.classList.add("my-chat");}
+                if(data.is_dm) div_chat.textContent = "(DM)" + div_chat.textContent;
+                if(data.nickname == nickname){div.classList.add("my-chat");}
+                // if(data.id==id){div.classList.add("my-chat");}
                 //아이디가 동일하면 my-chat, 같지 않으면 other-chat
                 // if(msg == document.getElementById("message").value){div.classList.add("my-chat");}
                 //내가 보냈는지 아닌지 식별하기 위해서 data.id==id
-                else{div.classList.add("other-chat");}
+                else{
+                    span.textContent = data.nickname;
+                    div.appendChild(span);
+                    div.classList.add("other-chat");
+                }
                 //<div class="my-chat"></div>
 
                 //div => <div class="my-chat"></div>
@@ -65,10 +82,40 @@
             socket.on("notice", function(data){
                 let chat_list = document.getElementById("chat-list");
                 let div = document.createElement("div"); //<div></div>
-                div.textContent = data + "님이 입장하셨습니다.";
-                // div.textContent = data;
+                // div.textContent = data + "님이 입장하셨습니다.";
+                div.textContent = data;
 
                 chat_list.appendChild(div);
+            });
+            socket.on("list", function(list){
+                //list = {id~~: nickname, id~~~: nickname};
+                let nick_list = document.getElementById("nick-list");
+                while (nick_list.firstChild){
+                    nick_list.removeChild(nick_list.lastChild);
+                    //옵션이 없어질 때까지 돌린다.//select 안의 모든 요소들 자식 요소들을 지운 것
+                }
+                let option = document.createElement("option");
+                option.text = "전체";
+                option.value = "전체";
+                nick_list.appendChild(option);
+                // 다 지우고 덮어쓰는 것
+                //select 태그 안에는 전체라는 옵션뿐일 것이다?
+
+                var a = {
+                    key1: '1',
+                    key2: '2',
+                    key3: '3'
+                };
+                for (let[key,value] of Object.entries(a)){
+                    //key = "key1", value="1";
+                    //key = "key2", value="2"
+                }
+                for (let [key,value] of Object.entries(list)){
+                    let option = document.createElement("option");
+                    option.text = value;
+                    option.value = value;
+                    nick_list.appendChild(option);
+                }
             });
         </script>
         
