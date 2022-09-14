@@ -52,6 +52,8 @@ io.on("connection", function(socket){
         io.emit("notice", list[socket.id] + "님이 퇴장하셨습니다.");
         delete list[socket.id];
         //이미 퇴장한 친구(퇴장 메시지)가 남아 있으면 안 되니까 지워주자.
+        io.emit("list", list);
+        //퇴장할 때 자동으로 리스트를 보내니까 이전에 퇴장한 닉네임은 자동으로 사라짐.(새로고침 안 해도 실행됨)
     });
 });
 
