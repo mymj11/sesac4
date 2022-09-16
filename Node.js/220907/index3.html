@@ -1,28 +1,143 @@
 <html>
     <head>
         <script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+        <script src="https://kit.fontawesome.com/3a4e397308.js" crossorigin="anonymous"></script>
         <style>
             .chat-list{
-                background-color: skyblue; 
-                width: 50%; 
-                height: 50%; 
+                background-color: rgb(79,137,196); 
+                width: 20%;
+                height: 55%;  
                 padding: 10px;
+                border-radius : 35px;
+                margin-top: 95px;
+                position: relative;
             }
-            .chat-list div div {display: inline-block; padding: 3px;}
+            .fa-chevron-left{
+                
+            }
+            .fa-ellipsis-vertical{
+                margin-left: 330px;
+            }
+
+            .icon{
+                position: absolute;
+                display: flex;
+                /* display: inline-block;  */
+                color: rgb(241,243,246);
+                margin-top: 25px;
+            }
+
+            .chat-list2{
+                background-color: rgb(241,243,246); 
+                width: 95%;
+                /* chat-list의 자식이기 때문에 100%로 해야 같은 너비를 가짐 */
+                height: 90%;  
+                padding: 10px;
+                border-radius : 35px;
+                margin-top: 97px;
+                margin-left: -10px;
+                /* 마이너스를 쓰는 것을 추천하지 않지만 margin-right: px;가 적용이 안 된다면 쓸 수 있다. */
+                position: absolute;
+                /* justify-content: center;
+                align-items: center; */
+            }
+            .chat-list div div div {display: inline-block; padding: 3px;}
+            /* 위에 chat-list2가 div로 추가 되었기 때문에 div를 한 번 더 써줘야 채팅메시지가 세로로 맞게 들어간다. */
             .my-chat{text-align: right;}
-            .my-chat div{background-color: yellow; display: inline-block;}
-            .other-chat div{background-color: white;}
+            .my-chat div{
+                background-color: rgb(164,196,225); 
+                border-radius: 10px;
+                display: inline-block;
+            }
+            .other-chat div{
+                background-color: white;
+                border-radius: 10px;
+            }
+            /* .fa-user-group{
+                color: rgb(108, 110, 110);
+                border-color: rgb(81, 85, 85);
+                border : 1px;
+                margin-right: 5px;
+            } */
+            #nick-list{
+                /* width : 10%; */
+                padding : 5px;
+                margin-right: 10px;
+                margin-top : 10px;
+                border-radius : 5px;
+                cursor : pointer;
+                font-size : 13px;
+                font-weight : 550;
+                border : none;
+                background-color : white;
+                color : rgb(108, 110, 110);
+                border : 1px;
+                border-color: rgb(81, 85, 85);
+                border-style: solid;
+            }
+            /* .fa-message{
+                margin-right: 5px;
+                color: rgb(81, 85, 85);
+                border : 1px;
+            } */
+            /* .fa-comment{
+                margin-right: 5px;
+                color: rgb(81, 85, 85);
+            } */
+            #message{
+                width : 20%;
+                padding : 6px;
+                margin-right: 10px;
+                margin-top : 10px;
+                border-radius : 5px;
+                cursor : pointer;
+                font-size : 13px;
+                font-weight : 550;
+                border : none;
+                background-color : white;
+                color : rgb(108, 110, 110);
+                border : 1px;
+                border-color: rgb(81, 85, 85);
+                border-style: solid;
+            }
+            .sendbtn{
+                width : 5%;
+                padding : 7px;
+                margin-right: 10px;
+                margin-top : 10px;
+                border-radius : 5px;
+                cursor : pointer;
+                font-size : 13px;
+                font-weight : 550;
+                border : none;
+                background-color : white;
+                color : rgb(108, 110, 110);
+                border : 1px;
+                border-color: rgb(81, 85, 85);
+                border-style: solid;
+            }
+            .fa-paper-plane{
+                border : 1px;
+            }
         </style>
     </head>
 
     <body>
-
-        <div id = "chat-list" class="chat-list"></div>
+        <div id = "chat-list" class="chat-list">
+            <div class="icon"><i class="fa-solid fa-chevron-left fa-2x"></i>
+            <i class="fa-solid fa-ellipsis-vertical fa-2x"></i></div>
+            <!-- <i class="fa-solid fa-list-ul"></i> -->
+            <div id = "chat-list2" class = "chat-list2"></div>
+        </div>
+        <!-- <i class="fa-solid fa-user-group"></i> -->
         <select id = "nick-list">
-            <option value="전체">전체</option>
+            <option value="전체" id = list>전체</option>
         </select>
+        <!-- <i class="fa-regular fa-comment"></i><input type = "text" id = "message"> -->
+        <!-- <i class="fa-regular fa-message"></i><input type = "text" id = "message"> -->
         <input type = "text" id = "message">
-        <button type="button" onclick="send();">전송</button>
+        <button type="button" class = "sendbtn" onclick="send();"><i class="fa-regular fa-paper-plane"></i></button>
+        <!-- <button type="button" class = "sendbtn" onclick="send();"><i class="fa-solid fa-location-arrow"></i></button> -->
         <script>
             var nickname = prompt("닉네임을 입력해주세요.");
             // var id = "";
@@ -44,7 +159,8 @@
             }
             socket.on("newMessage", function(data){
                 //data = {id:~~~, msg:~~~}
-                let chat_list = document.getElementById("chat-list");
+                // <i class="fa-regular fa-circle-user"></i>
+                let chat_list = document.getElementById("chat-list2");
                 let div = document.createElement("div")
                 //내가 새로운 메시지를 받았으면 위의 chat-list에 넣어주기
                 //내 메시지를 담을 div 만들기 그래야 덮어지지 않음 <div></div>
@@ -80,7 +196,7 @@
             //내가 보낸 메시지는 오른쪽에 받는 메시지는 왼쪽으로 나온다.
 
             socket.on("notice", function(data){
-                let chat_list = document.getElementById("chat-list");
+                let chat_list = document.getElementById("chat-list2");
                 let div = document.createElement("div"); //<div></div>
                 // div.textContent = data + "님이 입장하셨습니다.";
                 div.textContent = data;
