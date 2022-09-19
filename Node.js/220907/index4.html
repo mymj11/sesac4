@@ -1,0 +1,219 @@
+<html>
+    <head>
+        <script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+        <script src="https://kit.fontawesome.com/3a4e397308.js" crossorigin="anonymous"></script>
+        <style>
+            body{
+                background: linear-gradient(115deg, rgba(23, 190, 187, 1),rgba(240, 166, 202, 1));
+                /* 그라데이션 */
+            }
+            .chat-list{
+                /* background-color: white;
+                opacity: 0.1;  */
+                /* 투명도, 숫자 낮을 수록 투명해짐 */
+                /* min-width: 30%; 최소크기유지*/
+                width : 30%;
+                height: 60%;  
+                padding: 10px;
+                border-radius : 5px;
+                position: relative;
+                box-shadow: 0 5px 18px -7px rgba(0, 0, 0, 1);
+                margin : 10% auto;
+                margin-bottom : -2.3%;
+            }
+            .chat-list div div  {display: inline-block; padding: 3px;}
+            .my-chat{
+                text-align: right;
+            }
+            .my-chat div{
+                /* background-color: white;
+                opacity: 0.6; */
+                border-radius: 10px;
+                display: inline-block;
+                color: black;
+                border : 1px;
+                border-color: white;
+                border-style: solid;
+                margin-top: 5px;
+            }
+            .other-chat div{
+                background-color: white;
+                opacity: 0.2; 
+                border-radius: 10px;
+            }
+            #nick-list{
+                width : 6%;
+                padding : 15px;
+                border-radius : 5px;
+                cursor : pointer;
+                font-size : 13px;
+                font-weight : 550;
+                border : none;
+                background-color : white;
+                opacity: 0.3;
+                margin-left : 34.6%;
+                outline: none;
+                color:black;
+                /* color:white;
+                background-color : black;
+                opacity: 0.05;
+                border : 1px;
+                border-color: white;
+                border-style: solid; */
+            }
+            #message{
+                width : 19.2%;
+                padding : 15px;
+                border-radius : 5px;
+                cursor : pointer;
+                font-size : 13px;
+                font-weight : bold;
+                /* border : 1px;
+                border-color: white;
+                border-style: solid; */
+                border : none;
+                background-color : white;
+                opacity: 0.3;
+                color:black;
+                /* background-color : black; */
+                /* opacity: 0.05; */
+                margin-left : 0.1%;
+                outline: none;
+            }
+            .sendbtn{
+                width : 5%;
+                padding : 16px;
+                border-radius : 5px;
+                cursor : pointer;
+                font-size : 13px;
+                font-weight : bold;
+                border : none;
+                background-color : white;
+                opacity: 0.3;
+                margin-left : 60.4%;
+                margin-top: -1.84%;
+                outline: none;
+                color:black;
+                /* color:white;
+                background-color : black;
+                opacity: 0.05;
+                border : 1px;
+                border-color: white;
+                border-style: solid; */
+            }
+            /* width 줄 때 위에 전체 width 몇인지 보고 맞췃서 해야 안 밀린다. */
+            .fa-paper-plane{
+                border : 1px;
+            }
+        </style>
+    </head>
+
+    <body class>
+        <div id = "chat-list" class="chat-list">
+        </div>
+        <select id = "nick-list">
+            <option value="전체" id = list>전체</option>
+        </select>
+        <input type = "text" id = "message">
+        <button type="button" class = "sendbtn" onclick="send();"><i class="fa-regular fa-paper-plane"></i></button>
+        <!-- <button type="button" class = "sendbtn" onclick="send();"><i class="fa-solid fa-location-arrow"></i></button> -->
+        <script>
+            var nickname = prompt("닉네임을 입력해주세요.");
+            // var id = "";
+            //내가 사용할 수 있도록 저장
+            var socket = io.connect();
+            socket.emit("info2", {nickname: nickname});
+            // socket.on("info", function(data){id = data;});
+
+            function send(){
+                //메시지를 보내자. 클라이언트가 서버에게 내가 누군지 이미 한 번 알기 때문에 메시지 보낼 때마다 아이디는 안 보내도 된다?
+                let msg = document.getElementById("message").value;
+                let nick = document.getElementById("nick-list").value;
+                //socket.emt("send", {id, msg});
+                socket.emit("send", {msg: msg, to: nick});
+                //to: nick은 내가 선택한 닉네임
+                // socket.emit("send", {id: id, msg: msg});
+                // socket.emit("send", msg); //내가 입력한 메시지를 send라는 이벤트명으로 보내기
+                document.getElementById("message").value="";
+            }
+            socket.on("newMessage", function(data){
+                //data = {id:~~~, msg:~~~}
+                // <i class="fa-regular fa-circle-user"></i>
+                let chat_list = document.getElementById("chat-list");
+                let div = document.createElement("div")
+                //내가 새로운 메시지를 받았으면 위의 chat-list에 넣어주기
+                //내 메시지를 담을 div 만들기 그래야 덮어지지 않음 <div></div>
+                let div_chat = document.createElement("div");
+                let span = document.createElement("span");
+                //<div><div>
+
+
+                div_chat.textContent = data.msg; //<div>{msg}</div>
+
+                if(data.is_dm) div_chat.textContent = "(DM)" + div_chat.textContent;
+                if(data.nickname == nickname){div.classList.add("my-chat");}
+                // if(data.id==id){div.classList.add("my-chat");}
+                //아이디가 동일하면 my-chat, 같지 않으면 other-chat
+                // if(msg == document.getElementById("message").value){div.classList.add("my-chat");}
+                //내가 보냈는지 아닌지 식별하기 위해서 data.id==id
+                else{
+                    span.textContent = data.nickname;
+                    div.appendChild(span);
+                    div.classList.add("other-chat");
+                }
+                //<div class="my-chat"></div>
+
+                //div => <div class="my-chat"></div>
+                //div_chat => <div>{msg}</div>
+                
+                div.appendChild(div_chat);
+                //<div class="my-chat">
+                        //<div>{msg}</div>
+                //</div>
+                chat_list.appendChild(div);
+            });
+            //내가 보낸 메시지는 오른쪽에 받는 메시지는 왼쪽으로 나온다.
+
+            socket.on("notice", function(data){
+                let chat_list = document.getElementById("chat-list");
+                let div = document.createElement("div"); //<div></div>
+                // div.textContent = data + "님이 입장하셨습니다.";
+                div.textContent = data;
+
+                chat_list.appendChild(div);
+            });
+            socket.on("list", function(list){
+                //list = {id~~: nickname, id~~~: nickname};
+                let nick_list = document.getElementById("nick-list");
+                while (nick_list.firstChild){
+                    nick_list.removeChild(nick_list.lastChild);
+                    //옵션이 없어질 때까지 돌린다.//select 안의 모든 요소들 자식 요소들을 지운 것
+                }
+                let option = document.createElement("option");
+                option.text = "전체";
+                option.value = "전체";
+                nick_list.appendChild(option);
+                // 다 지우고 덮어쓰는 것
+                //select 태그 안에는 전체라는 옵션뿐일 것이다?
+
+                var a = {
+                    key1: '1',
+                    key2: '2',
+                    key3: '3'
+                };
+                for (let[key,value] of Object.entries(a)){
+                    //key = "key1", value="1";
+                    //key = "key2", value="2"
+                }
+                for (let [key,value] of Object.entries(list)){
+                    let option = document.createElement("option");
+                    option.text = value;
+                    option.value = value;
+                    nick_list.appendChild(option);
+                }
+            });
+        </script>
+        
+    </body>
+</html>
+
