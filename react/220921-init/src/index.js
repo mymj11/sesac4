@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 //React, ReactDOM는 불러오는 것.
 import ClassComponent from './ClassComponent';
-// import './index.css';
 import App from './App';
 //App.js에서 export default App;(내보낸 값)을 가져오기(import)
 //그럼 export default App;에서 App은 APP.js에서 App()이고 return하니까? return()
