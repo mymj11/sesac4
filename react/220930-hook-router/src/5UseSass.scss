@@ -1,0 +1,65 @@
+@import './util.scss';
+// @import '../node_modules/include-media/dist/include-media';
+@import '~include-media/dist/include-media';
+@import '~open-color/open-color';
+
+// $red: red;
+// $orange: orange;
+// $yellow: yellow;
+// $green: green;
+// $blue: blue;
+// $indigo: indigo;
+// $purple: purple;
+
+.UseSass{
+    display: flex;
+    background: $oc-gray-2;
+    // @mixin boxSize($size) {
+    //     width: 100px;
+    //     height: 20px * $size;
+    // }
+    //묶어서 재사용 가능하게 해줌.
+
+    @include media('<768px'){
+        background: $oc-gray-9;
+    } //반응형
+    .box{
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        //.box.red
+        &.red{
+            @include boxSize(1); //@mixin 불러올 때
+            background-color: $red;
+        }
+        &.orange{
+            @include boxSize(2);
+            background-color: $orange;
+        }
+        &.yellow{
+            @include boxSize(3);
+            background-color: $yellow;
+        }
+        &.green{
+            @include boxSize(4);
+            background-color: $green;
+        }
+        &.blue{
+            @include boxSize(5);
+            background-color: $blue;
+        }
+        &.indigo{
+            @include boxSize(6);
+            background-color: $indigo;
+        }
+        &.purple{
+            @include boxSize(7);
+            background-color: $purple;
+        }
+
+        //.box:hover
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}

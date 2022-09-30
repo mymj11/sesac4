@@ -1,0 +1,58 @@
+@import '~include-media/dist/include-media';
+@import '~open-color/open-color';
+
+$pink: pink;
+$yellow: yellow;
+$green: green;
+
+//mixin을 이용해서 bounce라는 이름을 묶었다.
+//keyframes의 이름을 변수? $bounce라고 지정했다.
+@mixin bounce ($bounce, $size){
+    @keyframes #{$bounce}{
+        from, to{
+            left: 0px;
+            top: 0px;
+        }
+        25%{
+            top: 0px;
+            left: $size;
+        }
+        50%{
+            top: $size;
+            left: $size;
+        }
+        75%{
+            top: $size;
+            left: 0px;
+        }
+    }    
+}
+
+.ball{
+    width: 50px;
+    height: 50px;
+    position: relative;
+    border-radius: 50%;
+    animation: 3s ease-in infinite;
+
+    &.pink{
+        animation-name: animation1;
+        background-color: $pink;
+    }
+
+    &.yellow{
+        animation-name: animation2;
+        background-color: $yellow;
+    }
+
+    &.green{
+        animation-name: animation3;
+        background-color: $green;
+    }
+
+    //불러오자.
+    //시계 방향으로 각각
+    @include bounce(animation1, 100px); //100만큼 움직인다.
+    @include bounce(animation2, 200px); //200만큼
+    @include bounce(animation3, 300px); //300만큼
+}
