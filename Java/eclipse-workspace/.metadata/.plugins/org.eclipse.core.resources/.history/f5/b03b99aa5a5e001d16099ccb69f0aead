@@ -1,0 +1,20 @@
+package first_project;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.print("hello");
+		
+		boolean logic = true;
+		
+		char ch = 'A';
+		
+		int number = 2135;
+		
+		double number2 = 5.6;
+		System.out.print(logic);
+		System.out.print(ch);
+	}
+
+}

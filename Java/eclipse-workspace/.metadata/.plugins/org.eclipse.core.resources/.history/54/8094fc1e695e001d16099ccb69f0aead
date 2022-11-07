@@ -1,0 +1,93 @@
+package first_project;
+
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		for (int i=0; i<10; i++) {
+			System.out.print(i+ "");
+		}
+		
+		int i=0;
+		while(i<10) {
+			System.out.print(i+ "");
+			i++;
+		}
+	}
+}
+		
+		
+		//사용자에게 뭘 입력할지 알려주자.
+		//System.out.println("이름, 나이, 키, 결혼 여부를 입력해주세요.");
+		
+//		//입력받을 준비
+//		//scanner은 객체
+//		Scanner scanner = new Scanner(System.in);
+//		
+//		//입력한 값들을 저장해 줄 공간을 만들자.
+//		//string형으로 받자. 변수 name //next 메소드 사용.
+//		String name = scanner.next();
+//		//nextInt는 공백 이전의 숫자를 읽음?
+//		int age = scanner.nextInt();
+//		double height = scanner.nextDouble();
+//		//boolean은 true or false
+//		boolean married = scanner.nextBoolean();
+//		
+//		//입력한 값들이 잘 담겼는지 확인
+//		System.out.println(name);
+//		System.out.println(age);
+//		System.out.println(height);
+//		System.out.println(married);
+//		
+//		//scanner 닫아주기
+//		scanner.close();
+		
+//		double a = 5.2;
+//		double b = 2.0;
+//		System.out.println(a/b);
+//		
+//		//한 번 선언한 변수는 재선언 불가.
+//		int c = 5;
+//		int d = 2;
+//		//강제 형 변환. 정수가 아닌 실수로
+//		System.out.println((double)c/d);
+		
+
+		
+			
+//		System.out.print("hello");
+//		
+//		boolean logic = true;
+//		
+//		char ch = 'A';
+//		
+//		int number = 2135;
+//		
+//		double number2 = 5.6;
+//		
+//		//출력은 print와 println
+//		System.out.println(logic);
+//		System.out.println(ch);
+//		
+//		//string 선언
+//		String str = "rlaalswl";
+//		String str2 = new String("rlaalswl");
+
+
+//int number = 9;
+//String str = new String("홍길동");
+//
+////if(number % 3 == 0) System.out.println("3의 배수");
+////else System.out.println("3의 배수 아님");
+//
+//switch(str) {
+//case "홍길동":	
+//	System.out.println("남자");
+//	break;
+//default:
+//	System.out.println("3의 배수 아님");
+//}
+		
