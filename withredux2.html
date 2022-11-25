@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.min.js"></script>
+    </head>
+    
+    <body>
+        이름 : <input type="text" id="name"> <br />
+        내용 : <input type="text" id="content"> 
+        <input type="button" value="작성" onclick="writeBoard()">
+    
+        <hr>
+        
+        <table border="1" cellspacing="0" cellpadding="5" width="50%">
+            <tr>
+                <td>No.</td>
+                <td>이름</td>
+                <td>내용</td>
+                <td>삭제</td>
+            </tr>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+        
+        <script>
+            function reducer(state, action){
+                if ( state === undefined ) {
+                    return { cnt: 0, boards: [] }; //state의 초기값을 세팅
+                }
+                if ( action.type === 'WRITE'){
+                    //data = {no: ~~, name: ~~, content: ~~}
+                    let boards = Object.assign(state.boards); //나열해서 복제하겠다?
+                    boards.push(action.data);
+                    return { cnt: state.cnt + 1, boards: boards};
+                } else if ( action.type === 'DELETE'){
+                    let boards = Object.assign(state.boards);
+                    boards = boards.filter(board => board.no != action.no);
+                    return { cnt: state.cnt, boards};
+                }
+            }
+            var store = Redux.createStore(reducer);
+
+            //작성을 누르면 실행되는 함수.
+            function writeBoard(){
+                let state = store.getState();
+                let data = {
+                    no: state.cnt,
+                    name :  document.querySelector('#name').value,
+                    content : document.querySelector('#content').value
+                }
+                store.dispatch({type: 'WRITE', data: data});
+            }
+            function deleteBoard(no){
+                var state = store.getState();
+                store.dispatch({type:'DELETE', no: no});
+            }
+            function getData(){
+            // 작성 버튼을 눌러 dispatch가 reducer까지 모두 실행한 후 state를 반환한 뒤 실행되는 함수
+            // getData의 동작 : reducer에서 반환된 바뀐 state를 가지고 tbody의 내용을 새롭게 쓰는 동작을 진행
+                var state = store.getState();
+                console.log(state); //현재의 state 확인
+                var text = "";
+
+                /*
+                for ( let i = 0; i < state.boards.length; i++ ){
+                    let board = state.boards[i];
+                }를 
+                for ( baord of state.boards ){
+                }로 코드를 쓴 것.
+                */
+                for ( board of state.boards ) {
+                    text +=
+                        `<tr>
+                            <td>${board.no}</td>
+                            <td>${board.name}</td>
+                            <td>${board.content}</td>
+                            <td>
+                                <button type="button" onclick="deleteBoard(${board.no});">삭제</button>
+                            </td>
+                        </tr>`;
+                }
+                // 2개의 boards가 존재한다면 <tr>~~<tr><tr>~~~</tr>
+                document.querySelector("#tbody").innerHTML = text;
+            }
+            store.subscribe(getData);
+            getData();
+
+            // 1. state를 가져올 때
+            // 1) store의 getState() 함수를 실행시킨다.
+            // 2) getState() 함수는 store 안의 state를 읽고 그 정보를 가져와 반환해준다.
+
+            // 2. state를 변경할 때
+            // 1) 사용자(클라이언트)는 store의 dispatch 함수를 실행시킨다.
+            
+            // - 이 때, dispatch 함수를 실행할 때 무엇을 변경할지, 어떻게 변경할지에 대한 정보를 전달하는데 그 객체가 'action'이다.
+            // 2) dispatch 함수는 action 객체를 받고, reducer 함수를 실행시킨다.
+            // - reducer 함수는 2개의 인자를 받는데 첫 번째는 현재 state, 두 번째는 dispatch에서 전달한 action 객체이다.
+            // 3) reducer 함수는 action을 토대로 state를 변경한 후, 변경된 state를 반환해준다. 
+            // 4) reducer 함수가 종료되면 dispatch 함수는 subscribe 함수에 등록된 render 함수를 실행한다. 
+            // 5) render 함수는 state를 가져와 사용자에게 보여준다. (case 1과 동일하게)
+
+        </script>
+    </body>
+</html>

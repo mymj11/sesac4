@@ -1,0 +1,95 @@
+<html>
+    <head>
+        <!-- Redux CDN 호출 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.min.js"></script>
+        <style>
+            div {
+                border: 3px solid black;
+                width: 150px;
+                height: 150px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="red">
+            <h1>red</h1>
+            <!-- Dispatch를 이용해서 상태를 바꾸는 것? 상태를 변경하기 위해 action 객체를 받는다.
+            Reducer을 호출해 state 값을 변경하고 subscribe 함수를 실행해 그 곳에 등록되어 있는 render 함수를 실행.-->
+            <button type="button" onclick="store.dispatch({type:'CHANGE', color:'red'});">red</button>
+        </div>
+        <div id="green">
+            <h1>green</h1>
+            <button type="button" onclick="store.dispatch({type:'CHANGE', color:'green'});">green</button>
+        </div>
+        <div id="yellow">
+            <h1>yellow</h1>
+            <button type="button" onclick="store.dispatch({type:'CHANGE', color:'yellow'});">yellow</button>
+        </div>
+    
+        <script>
+            //Dispatch를 통해 상태를 변경하는데 그때 전달되는 객체 Action은 컴포넌트에서 store에 운반할 데이터를 말함.
+            //Action은 하나의 객체로 표현된다.
+            function reducer(state, action){
+                //state : 현재 상태 -> 변경되기 전,
+                //action : dispatch를 호출할 때 넣었던 객체
+                //return {color: 'red'};
+                if (action.type === 'CHANGE'){
+                    return {color: action.color};
+                }
+            }
+
+            //store는 상태가 관리되는 오직 하나의 공간으로 실제 정보가 저장.
+            //store 안에는 State와 Reducer가 들어있다. 한 개의 프로젝트에서는 단 하나의 Store만이 존재할 수 있다.
+
+            //reducer는 action의 type에 따라 변화를 일으키는 함수다.
+            //첫 번째 매개 변수는 초기 상태값, 두 번째 매개 변수는 Action 값을 받는다.
+            //즉, state를 입력값으로 받고 action을 참조해 새로운 state를 만들어 return하는 state 가공자이다.
+
+            var store = Redux.crateStore(reducer);
+            // function red(){
+            //     //getState를 이용해 상태를 가져오자. //상태를 바꾸는 것이 color를 바꾸는 것.
+            //     var state = store.getState(); //{color:~~}
+            //     document.querySelector('#red').style.backgroundColor = state.color;
+            //     //red의 color를 바꾸는 것을 state.color로 하자.
+            // }
+            // function green(){
+            //     var state = store.getState(); //{color:~~}
+            //     document.querySelector('#green').style.backgroundColor = state.color;
+            // }
+            // function yellow(){
+            //     var state = store.getState(); //{color:~~}
+            //     document.querySelector('#yellow').style.backgroundColor = state.color;
+            // }
+            // //본인의 div의 color만 바꾸는 것.
+
+            // //등록을 해줘야 한다.
+            // store.subscribe(red);
+            // store.subscribe(green);
+            // store.subscribe(yellow);
+
+            function changeAll(){
+                var state = store.getState();
+                document.querySelector('#red').style.backgroundColor = state.color;
+                document.querySelector('#green').style.backgroundColor = state.color;
+                document.querySelector('#yellow').style.backgroundColor = state.color;
+            }
+            store.subscribe(changeAll);
+
+            // 1. state를 가져올 때
+            // 1) store의 getState() 함수를 실행시킨다.
+            // 2) getState() 함수는 store 안의 state를 읽고 그 정보를 가져와 반환해준다.
+
+            // 2. state를 변경할 때
+            // 1) 사용자(클라이언트)는 store의 dispatch 함수를 실행시킨다.
+            
+            // - 이 때, dispatch 함수를 실행할 때 무엇을 변경할지, 어떻게 변경할지에 대한 정보를 전달하는데 그 객체가 'action'이다.
+            // 2) dispatch 함수는 action 객체를 받고, reducer 함수를 실행시킨다.
+            // - reducer 함수는 2개의 인자를 받는데 첫 번째는 현재 state, 두 번째는 dispatch에서 전달한 action 객체이다.
+            // 3) reducer 함수는 action을 토대로 state를 변경한 후, 변경된 state를 반환해준다. 
+            // 4) reducer 함수가 종료되면 dispatch 함수는 subscribe 함수에 등록된 render 함수를 실행한다. 
+            // 5) render 함수는 state를 가져와 사용자에게 보여준다. (case 1과 동일하게)
+            
+        </script>
+    </body>
+</html>
